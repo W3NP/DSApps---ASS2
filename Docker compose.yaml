@@ -1,0 +1,23 @@
+version: '3'
+services:
+  ballerina-service:
+    build:
+      context: ./ballerina-service
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"
+    networks:
+      - performance_manager_network
+
+  ballerina-client:
+    build:
+      context: ./ballerina-client
+      dockerfile: Dockerfile
+    depends_on:
+      - ballerina-service
+    networks:
+      - performance_manager_network
+
+networks:
+  performance_manager_network:
+    driver: bridge
